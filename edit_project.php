@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     #update only the correct project that is owned by the user.
     $stmt = $conn->prepare("
-    UPDATE projects 
+    UPDATE projects
     SET title = ?, start_date = ?, end_date = ?, description = ?, phase = ?
     WHERE pid = ? AND uid = ?
 ");
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <p>
     <a href="projects.php">Browse Projects</a> |
     <a href="index.php">Home</a> |
-    
+
 
     <?php if (isset($_SESSION['uid'])): ?>
         <a href="add_project.php">Add Project</a> |
@@ -97,34 +97,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!--form fields are pre-populated with the existing project data to allow users to see/modify current values easily.-->
 <form method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
 <label>Title</label><br>
-<input 
-    type="text" 
-    name="title" 
-    value="<?php echo $project['title']; ?>" 
+<input
+    type="text"
+    name="title"
+    value="<?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?>"
     required
 ><br><br>
 
 <label>Start Date</label><br>
-<input 
-    type="date" 
-    name="start_date" 
-    value="<?php echo htmlspecialchars($project['start_date']); ?>" 
+<input
+    type="date"
+    name="start_date"
+    value="<?php echo htmlspecialchars($project['start_date']); ?>"
     required
 ><br><br>
 
 <label>End Date</label><br>
-<input type="date" name="end_date" value="<?php echo htmlspecialchars($project['end_date']); ?>">
+<input type="date" name="end_date" value="<?php echo htmlspecialchars($project['end_date']); ?>" required>
 <br><br>
 
 <label>Phase</label><br>
 <select name="phase" required>
-    <option value="design">Design</option>
-    <option value="development">Development</option>
-    <option value="testing">Testing</option>
-    <option value="deployment">Deployment</option>
-    <option value="complete">Complete</option>
+    <option value="design" <?php if ($project['phase'] === 'design') echo 'selected'; ?>>Design</option>
+    <option value="development" <?php if ($project['phase'] === 'development') echo 'selected'; ?>>Development</option>
+    <option value="testing" <?php if ($project['phase'] === 'testing') echo 'selected'; ?>>Testing</option>
+    <option value="deployment" <?php if ($project['phase'] === 'deployment') echo 'selected'; ?>>Deployment</option>
+    <option value="complete" <?php if ($project['phase'] === 'complete') echo 'selected'; ?>>Complete</option>
 </select>
 <br><br>
 

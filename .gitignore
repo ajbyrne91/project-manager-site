@@ -1,0 +1,21 @@
+# Local secrets and overrides
+.env
+.env.*
+!.env.example
+config.local.php
+
+# Operating system and editor files
+.DS_Store
+._*
+Thumbs.db
+.idea/
+.vscode/
+*~
+*.swp
+
+# Local logs, database dumps and backup archives
+*.log
+*.zip
+*.tar.gz
+/backups/
+/dumps/

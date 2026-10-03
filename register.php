@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($username) || empty($email) || empty($password)) {
     $error = "All fields are required.";
 } else {
-    
+
     #Check if username or email already exists before inserting new user
     $sql = "SELECT uid FROM users WHERE username = ? OR email = ?";
     $stmt = $conn->prepare($sql);
@@ -35,7 +35,7 @@ if ($stmt->num_rows > 0) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sss", $username, $hashed_password, $email);
     $stmt->execute();
-    #redirect user to login page 
+    #redirect user to login page
     header("Location: login.php");
     exit();
 }
@@ -79,6 +79,7 @@ if ($stmt->num_rows > 0) {
 
 <!--form sends data via POST. Required for basic browser validation-->
 <form method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
     <label>Username</label><br>
         <input type="text" name="username" required><br><br>

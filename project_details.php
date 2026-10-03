@@ -7,13 +7,13 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-#project ID is stored in a variable. 
+#project ID is stored in a variable.
 $pid = $_GET['id'];
 
-#Prepared statement to get the project from the database. Use a JOIN between projects & users tables to retrieve the email address of the project owner.
+#Prepared statement to get the project and owner username without exposing the account email.
 $stmt = $conn->prepare("
-    SELECT projects.*, users.email 
-    FROM projects 
+    SELECT projects.*, users.username
+    FROM projects
     JOIN users ON projects.uid = users.uid
     WHERE projects.pid = ?
 ");
@@ -56,7 +56,7 @@ $project = $result->fetch_assoc();
 
 <hr>
 
-<h2><?php echo $project['title']; ?></h2>
+<h2><?php echo htmlspecialchars($project['title'], ENT_QUOTES, 'UTF-8'); ?></h2>
 
 <p><strong>Start Date:</strong> <?php echo htmlspecialchars($project['start_date']); ?></p>
 <p><strong>End Date:</strong> <?php echo htmlspecialchars($project['end_date']); ?></p>
@@ -65,7 +65,7 @@ $project = $result->fetch_assoc();
 <p><strong>Description:</strong></p>
 <p><?php echo htmlspecialchars($project['description']); ?></p>
 
-<p><strong>Owner Email:</strong> <?php echo htmlspecialchars($project['email']); ?></p>
+<p><strong>Owner:</strong> <?php echo htmlspecialchars($project['username']); ?></p>
 
 <br>
 

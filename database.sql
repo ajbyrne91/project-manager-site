@@ -1,8 +1,8 @@
---Create database
+-- Create database
 CREATE DATABASE IF NOT EXISTS project_manager_db;
 USE project_manager_db;
 
---Users Table
+-- Users Table
 CREATE TABLE users (
     uid INT(11) AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE users (
     UNIQUE (email)
 );
 
---Projects Table
+-- Projects Table
 CREATE TABLE projects (
     pid INT(11) AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(150) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE projects (
     phase ENUM('design', 'development', 'testing', 'deployment', 'complete'),
     uid INT(11),
     
---Foreign key constraint
+-- Foreign key constraint
     CONSTRAINT fk_user_project
     FOREIGN KEY (uid) REFERENCES users(uid)
     ON DELETE CASCADE

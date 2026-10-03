@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         #verify password, if correct store UID & username in the session
         if (password_verify($password, $user['password'])) {
 
+            session_regenerate_id(true);
             $_SESSION['uid'] = $user['uid'];
             $_SESSION['username'] = $username;
 
@@ -72,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <?php endif; ?>
 
 <form method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
     <label>Username</label><br>
     <input type="text" name="username" required><br><br>

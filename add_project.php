@@ -70,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!--Form includes fields for title, start & end date, description, and a dropdown selection for phase of project-->
 <form method="POST">
+    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
 
     <label>Title</label><br>
     <input type="text" name="title" required><br><br>
@@ -78,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="date" name="start_date" required><br><br>
 
     <label>End Date</label><br>
-    <input type="date" name="end_date"><br><br>
+    <input type="date" name="end_date" required><br><br>
 
     <label>Description</label><br>
     <textarea name="description" required></textarea><br><br>
